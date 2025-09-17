@@ -16,7 +16,12 @@ connectCloudinary()
 
 // middlewares
 app.use(express.json())
-app.use(cors())
+app.use(cors({
+  origin: 'https://dna-classical-homeopathy-clientsite-pfl9zfdi8.vercel.app/', // your deployed client
+  methods: ['GET','POST','PUT','DELETE'],
+  credentials: true
+}));
+
 
 
 // api endpoints
