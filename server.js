@@ -18,7 +18,7 @@ connectCloudinary()
 // Allowed Origins (your frontends)
 const allowedOrigins = [
   'https://dna-classical-homeopathy-clientsite-2zq1vhgj0.vercel.app', // deployed client
-  'https://vercel.com/abu-farhad-sardars-projects/dna-classical-homeopathy-admin-site',
+  'https://dna-classical-homeopathy-admin-site.vercel.app', // deployed admin
   'http://localhost:5173', // local client (vite default)
   'http://localhost:5174'  // local admin
 ]
