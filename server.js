@@ -27,16 +27,11 @@ const allowedOrigins = [
 app.use(express.json())
 
 app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true) // ✅ allow
-    } else {
-      callback(new Error("Not allowed by CORS")) // ❌ block
-    }
-  },
+  origin: allowedOrigins,   // <-- let cors handle the matching
   methods: ['GET','POST','PUT','DELETE'],
   credentials: true
-}))
+}));
+
 
 // api endpoints
 app.use('/api/admin', adminRouter)
