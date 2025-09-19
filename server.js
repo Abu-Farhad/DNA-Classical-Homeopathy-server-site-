@@ -16,24 +16,24 @@ connectDB()
 connectCloudinary()
 
 // Allowed Origins (your frontends)
-// const allowedOrigins = [
-//   'https://dna-classical-homeopathy-clientsite.vercel.app', // deployed client
-//   'https://dna-classical-homeopathy-admin-site.vercel.app',
-//   'http://localhost:5173', // local client (vite default)
-//   'http://localhost:5174'  // local admin
-// ]
+const allowedOrigins = [
+  'https://dna-classical-homeopathy-clientsite.vercel.app', // deployed client
+  'https://dna-classical-homeopathy-admin-site.vercel.app',
+  'http://localhost:5173', // local client (vite default)
+  'http://localhost:5174'  // local admin
+]
 
 // middlewares
 app.use(express.json())
 
-// app.use(cors({
-//   origin: allowedOrigins,   // <-- let cors handle the matching
-//   methods: ['GET','POST','PUT','DELETE'],
-//   allowedHeaders: ['Content-Type', 'Authorization','token'],
-//   credentials: true
-// }));
+app.use(cors({
+  origin: allowedOrigins,   // <-- let cors handle the matching
+  methods: ['GET','POST','PUT','DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
+}));
 
-
+app.options('*', cors())
 
 
 // api endpoints
