@@ -1,3 +1,7 @@
+// ----------------------
+// server.js
+// ----------------------
+
 import express from 'express';
 import cors from 'cors';
 import 'dotenv/config';
@@ -5,10 +9,10 @@ import connectDB from './config/mongodb.js';
 import connectCloudinary from './config/cloudinary.js';
 import adminRouter from './routes/adminRoute.js';
 import doctorRouter from './routes/doctorRoute.js';
-import userRouter from './routes/userRoute.js';
+import userRouter from './routes/userRoute.js'; // make sure file name is correct
 
 // ----------------------
-// App config
+// App Config
 // ----------------------
 const app = express();
 const port = process.env.PORT || 4000;
@@ -37,27 +41,18 @@ app.use(express.json());
 // CORS middleware
 app.use(cors({
   origin: function(origin, callback) {
-    // allow requests with no origin (like Postman or server-to-server)
+    // allow requests with no origin (Postman, server-to-server)
     if (!origin) return callback(null, true);
 
     if (allowedOrigins.includes(origin)) {
-      callback(null, true);
+      return callback(null, true);
     } else {
-      callback(new Error('Not allowed by CORS'));
+      console.log('Blocked by CORS:', origin);
+      return callback(new Error(`CORS policy: ${origin} not allowed`));
     }
   },
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization', 'token'],
-  credentials: true
-}));
-
-// Handle preflight requests
-app.options('*', cors({
-  origin: function(origin, callback) {
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.includes(origin)) callback(null, true);
-    else callback(new Error('Not allowed by CORS'));
-  },
   credentials: true
 }));
 
@@ -74,6 +69,19 @@ app.get('/', (req, res) => {
 });
 
 // ----------------------
-// Start server
+// Error handling middleware
 // ----------------------
-app.listen(port, () => console.log(`Server started on port ${port}`));
+app.use((err, req, res, next) => {
+  if (err) {
+    console.error('Error:', err.message);
+    return res.status(500).json({ message: err.message });
+  }
+  next();
+});
+
+// ----------------------
+// Start Server
+// ----------------------
+app.listen(port, () => {
+  console.log(`Server started on port ${port}`);
+});
