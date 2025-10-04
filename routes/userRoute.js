@@ -12,7 +12,7 @@ userRouter.post('/login',loginUser)
 
 userRouter.get('/get-profile',authUser,getProfile)
 userRouter.post('/update-profile',upload.single("image"),authUser,updatePfofile)
-userRouter.post('/check-slot-availability',authUser,checkSlotAvailability)
+userRouter.post('/check-slot-availability',checkSlotAvailability)
 userRouter.post('/book-appointment',authUser,bookAppointment)
 userRouter.get('/appointments',authUser,listAppointments)
 userRouter.post('/cancel-appointment',authUser,cancelAppointment)
