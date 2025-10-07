@@ -28,7 +28,7 @@ connectCloudinary();
 // ----------------------
 const allowedOrigins = [
   'https://dna-classical-homeopathy-client-sit.vercel.app', // deployed client
-  'https://dna-classical-homeopathy-admin-site.vercel.app', // deployed admin
+  'https://dna-classical-homeopathy-git-c88f4d-abu-farhad-sardars-projects.vercel.app', // deployed admin
   'http://localhost:5173', // local client
   'http://localhost:5174'  // local admin
 ];
