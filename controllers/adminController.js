@@ -85,6 +85,7 @@ const allDoctors=async (req,res)=>{
 const appointmentsAdmin=async(req,res)=>{
     try {
         const appointments=await appointmentModel.find({})
+        appointments.reverse()
         res.json({success:true,appointments})
     } catch (error) {
         console.log(error)
@@ -92,4 +93,34 @@ const appointmentsAdmin=async(req,res)=>{
     }
 }
 
-export {addDoctor,loginAdmin,allDoctors,appointmentsAdmin}
+// Api for appointment cancellation
+const cancelAppointment=async(req,res)=>{
+    try {
+        // const {userId}=req
+        const {appointmentId}=req.body
+        const appointmentData=await appointmentModel.findById(appointmentId)
+
+        // verify appointment user
+        // if(appointmentData.userId.toString()!=userId){
+        //     return res.json({success:false,message:"Unauthorized action"})
+        // }
+
+        await appointmentModel.findByIdAndUpdate(appointmentId,{cancelled:true})
+
+        // releasing doctor slot
+
+        const {docId,slotDate,slotTime}=appointmentData
+        const docData=await doctorModel.findById(docId)
+        let slots_booked=docData.slots_booked
+        slots_booked[slotDate]=slots_booked[slotDate].filter(e=>e!=slotTime)
+        await doctorModel.findByIdAndUpdate(docId,{slots_booked})
+
+        return res.json({success:true,message:"Appointment Cancelled"})
+
+    } catch (error) {
+        console.log(error)
+        res.json({success:false,message:error.message})
+    }
+}
+
+export {addDoctor,loginAdmin,allDoctors,appointmentsAdmin,cancelAppointment}
