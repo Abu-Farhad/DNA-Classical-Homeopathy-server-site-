@@ -10,8 +10,8 @@ import Razorpay from 'razorpay'
 // API to register user
 const registerUser=async(req,res)=>{
     try {
-        const {name,email,password}=req.body
-        if(!name||!email||!password){
+        const {name,email,password,phone}=req.body
+        if(!name||!email||!password ||!phone){
             return res.json({success:false,message:"Missing Details"})
         }
 
@@ -30,7 +30,7 @@ const registerUser=async(req,res)=>{
         const hashedPassword=await bcrypt.hash(password,salt)
 
         const userData={
-            name,email,password:hashedPassword
+            name,email,password:hashedPassword,phone
         }
 
         const newUser=new userModel(userData)
