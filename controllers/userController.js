@@ -10,8 +10,8 @@ import Razorpay from 'razorpay'
 // API to register user
 const registerUser=async(req,res)=>{
     try {
-        const {name,email,password,phone}=req.body
-        if(!name||!email||!password ||!phone){
+        const {name,password,phone}=req.body
+        if(!name||!password ||!phone){
             return res.json({success:false,message:"Missing Details"})
         }
 
@@ -48,8 +48,8 @@ const registerUser=async(req,res)=>{
 //API for user login
 const loginUser=async(req,res)=>{
     try {
-        const {email,password}=req.body
-        const user=await userModel.findOne({email})
+        const {phone,password}=req.body
+        const user=await userModel.findOne({phone})
         if(!user){
             return res.json({success:false,message:'User does not exist'})
         }
