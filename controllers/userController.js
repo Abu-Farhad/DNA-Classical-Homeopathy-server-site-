@@ -53,8 +53,8 @@ const registerUser = async (req, res) => {
 //API for user login
 const loginUser=async(req,res)=>{
     try {
-        const {phone,password}=req.body
-        const user=await userModel.findOne({phone})
+        const {email,password}=req.body
+        const user=await userModel.findOne({email})
         if(!user){
             return res.json({success:false,message:'User does not exist'})
         }
